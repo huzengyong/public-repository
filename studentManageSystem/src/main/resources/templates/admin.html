@@ -90,11 +90,12 @@
                 {"stuName": $("#stuName").val(),"speciality": $("#speciality").val(),"stuClass": $("#stuClass").val(),"stuAddr": $("#stuAddr").val()},
                 function (result) {
                     // let stu = JSON.parse(result);
-                    document.getElementById("stuList").innerHTML+="<tr><td><button onclick='getGrade()'>查询成绩</button></td><td>"+result.stuNo+"</td>"+
-                        "<td>"+$("#stuName").val()+"</td>"+
-                        "<td>"+$("#speciality").val()+"</td>"+
-                        "<td>"+$("#stuClass").val()+"</td>"+
-                        "<td>"+$("#stuAddr").val()+"</td></tr>";
+                    // document.getElementById("stuList").innerHTML+="<tr><td><button onclick='getGrade()'>查询成绩</button></td><td>"+result.stuNo+"</td>"+
+                    //     "<td>"+$("#stuName").val()+"</td>"+
+                    //     "<td>"+$("#speciality").val()+"</td>"+
+                    //     "<td>"+$("#stuClass").val()+"</td>"+
+                    //     "<td>"+$("#stuAddr").val()+"</td></tr>";
+                    location.reload();
                 }
             );
         }
