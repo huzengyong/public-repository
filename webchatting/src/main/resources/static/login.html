@@ -1,0 +1,39 @@
+
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Index</title>
+<script src="jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="login.css">
+
+</head>
+<script>
+	window.onload=function () {
+		let url = document.URL;
+		let mes = url.split('?')[1];
+		if(mes=='false'){
+			alert("用户名或密码错误");
+		}
+		else if (mes == 'online')
+			alert("该用户已在线，请勿重复登录");
+	}
+</script>
+<body>
+	<div class="box">
+		<h1>登录</h1>
+		<form action="/loginCheck" method="post">
+			<div class="inputBox">
+				<input type="text" name="username" id="username" required>
+				<label>账号:</label>
+			</div>
+			<div class="inputBox">
+				<input type="password" name="password" id="password"required>
+				<label>密码:</label>
+			</div>
+			<div id="mes"></div>
+			<input type="submit" value="提交">
+			<a class="relist" href="relist.html">注册</a>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+body
+{
+    margin:0px;
+    padding:0px;
+    background-repeat: no-repeat;
+    background-size:100% 100%;
+    background-attachment: fixed;
+}
+
+#box{
+    position: absolute;
+    left: 10%;
+}
+
+#friendBox{
+    position: relative;
+    background: rgba(0,0,0,.8);
+    width: 100px;
+    height: 70%;
+    overflow-y: auto;
+}
+
+#chatBox{
+    position: relative;
+    left: 30%;
+    transform: translateY(-200px);
+    width: 600px;
+    height: 600px;
+}
+#chatBox #chatList{
+    /*background-color: #03a9f4;*/
+    overflow-y: auto;
+    top: 10%;
+    width: 600px;
+    height: 400px;
+}
+#chatBox #chatting{
+    width: 500px;
+    height: 100px;
+}

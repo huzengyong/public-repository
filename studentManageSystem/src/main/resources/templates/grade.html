@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>grade</title>
+</head>
+<script th:src="@{jquery.js}" type="text/javascript"></script>
+<body>
+    <h3 th:text="${adminText}" th:id="${right}">学生登录</h3>
+    <h3 th:text="'姓名:'+${stuName}"></h3>
+    <h3 th:text="'学号:'+${stuNo}"></h3>
+    <div id="choose">
+        <h4>选课:</h4>
+        <select id="addSub">
+            <option th:each="sub : ${sub_list}"  th:text="${sub.getSubject()}"></option>
+        </select>
+        <button onclick="addSubject()">确认</button>
+    </div>
+    <div id="grade">
+        <h4>成绩:</h4>
+        <table border="1">
+            <tr>
+                <td>课程名称:</td>
+                <td th:each="sub:${stu_sub_list}"><div th:text="${sub.getSubject()}"></div></td>
+            </tr>
+            <tr>
+                <td>考试分数:</td>
+                <td th:each="sub : ${stu_sub_list}"><button onclick="changeGrade(this)" th:text="${sub.getGrade()}" th:class="${sub.getSubject()}"></button></td>
+            </tr>
+        </table>
+    </div>
+</body>
+<script>
+    function addSubject() {
+        let subject = document.getElementById("addSub");
+        alert(subject.options[subject.selectedIndex].value);
+        $.ajax({
+            url:"chooseSubject",
+            method:"post",
+            data:"stuNo=[[${stuNo}]]&subject="+subject.options[subject.selectedIndex].value,
+            success:function (result,status) {
+                alert(result);
+                location.reload();
+            }
+        })
+    }
+    function changeGrade(present) {
+        if ("true"=="[[${right}]]"){
+            let grade = prompt("修改分数:","");
+            if (grade!=null&&grade!=""){
+                $.ajax({
+                    url: "changeGrade",
+                    method: "post",
+                    data: "stuNo=[[${stuNo}]]&subject="+present.className+"&grade="+grade,
+                    success: function (result,status) {
+                        alert(result);
+                        location.reload();
+                    }
+                })
+            }
+        }
+    }
+</script>
+</html>

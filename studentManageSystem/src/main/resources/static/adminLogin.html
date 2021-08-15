@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>admin login</title>
+</head>
+<style>
+    #logBox{
+        position: absolute;
+        top: 30%;
+        left: 40%;
+    }
+</style>
+<body>
+<div id="logBox">
+    <h1>管理员登录</h1>
+    <form method="post" action="adminCheck">
+        <div>
+            <label>账号:</label>
+            <input type="text" name="account">
+        </div>
+        <div>
+            <label>密码:</label>
+            <input type="password" name="password">
+        </div>
+        <input type="submit">
+    </form>
+</div>
+</body>
+<script>
+    window.onload=function () {
+        let url = document.URL.split('?')[1];
+        if (url=='false')
+            alert('用户名或密码错误');
+    }
+</script>
+</html>

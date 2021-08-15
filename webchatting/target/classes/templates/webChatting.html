@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="UTF-8">
+    <title>webChatting</title>
+</head>
+<link th:href="@{webChatting.css}" rel="stylesheet" type="text/css" href="webChatting.css">
+<script type="text/javascript" th:src="@{jquery.js}" ></script>
+<!--<script type="text/javascript" th:src="@{webChatting.js}"></script>-->
+<body>
+    <div id="box">
+        <h1 th:text="'欢迎用户:'+${username}">登录成功</h1>
+        <div th:value="${userNo}" style="display: none"></div>
+        <div id="friendBox">
+            <button onclick="addFriend()">添加好友+</button>
+            <div id="friendApply">
+                <button onclick="friendApply()">好友申请</button>
+            </div>
+            <h4>好友列表</h4>
+            <!--/*@thymesVar id="friendList" type="java"*/-->
+            <div th:each="friend : ${friendList}">
+                <button th:class="${friend.getFriendName()}" th:text="${friend.getFriendName()}" th:value="${friend.getFriendNo()}" th:id="${friend.getFriendNo()}" onclick="chooseFriend(this)"></button>
+            </div>
+            <div>========</div>
+            <button onclick="deleteFriend()">删除好友</button>
+        </div>
+        <div id="chatBox">
+            <h4 id="chatFriendName"></h4>
+            <div id="chatList"></div>
+            <div>
+                <textarea id="chatting"></textarea>
+                <button id="submit" style="transform: translateY(-10px)" onclick="sendMes()">发送</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    //当前窗口所在的好友
+    let presentFriend = 0;
+    function sendMes(){
+        if (presentFriend!=0) {
+            $.getJSON(
+                "chatting",
+                {"userNo": "[[${userNo}]]", "mes": $("#chatting").val(), "friendNo": presentFriend.value},
+                function (result) {
+                    document.getElementById("chatList").innerHTML += "<div>"+new Date().toLocaleTimeString()+"</div>"+'<div style=\"color: chartreuse\">' + "[[${username}]]" + ':</div>' + '<div style=\"color: chartreuse\">' + $("#chatting").val() + '</div>' + '<br/>';
+                    document.getElementById("chatting").value = null;
+                    document.getElementById("chatList").scrollTop = document.getElementById("chatList").scrollHeight;
+                }
+            );
+        }
+    }
+
+    function chooseFriend(present){
+        document.getElementById("chatList").innerHTML="";
+        presentFriend = present;
+        document.getElementById("chatFriendName").innerHTML=present.className;
+        $.getJSON(
+            "chooseFriend",
+            {"userNo":"[[${userNo}]]","friendNo":presentFriend.value},
+            function (result) {
+                // let json = $.parseJSON(result.chat);
+                $.each(result,function (i,element) {
+                    let ele = JSON.parse(element);
+                    if (ele.sendNo=="[[${userNo}]]")
+                        document.getElementById("chatList").innerHTML+='<div style=\"color: chartreuse\">'+ele.chatTime+'</div>'+'<div style=\"color: chartreuse\">'+"[[${username}]]"+':</div>'+'<div style=\"color: chartreuse\">'+ele.chatMessage+'</div> '+'<br/>';
+                    else document.getElementById("chatList").innerHTML+='<div>'+ele.chatTime+':</div>'+'<div>'+present.className+':</div>'+'<div>'+ele.chatMessage+'</div>'+'<br/>';
+                })
+                document.getElementById("chatList").scrollTop = document.getElementById("chatList").scrollHeight;
+            }
+        );
+        present.style.backgroundColor="";
+    }
+
+    setInterval(receiveCheck,500);
+    function receiveCheck() {
+        $.ajax({
+            url:"receiveCheck",
+            method:"post",
+            data:"userNo="+"[[${userNo}]]",
+            success:function (result,status) {
+                let array = result.split(',');
+                array.forEach(function (x, i, a) {
+                    if (document.getElementById(x)!=null)
+                        document.getElementById(x).style.backgroundColor = "yellow";
+                })
+            }
+        })
+    }
+
+    window.onbeforeunload = function () {
+        $.getJSON(
+            "leave",
+            {"userNo":"[[${userNo}]]"},
+            function (result) {
+            }
+        );
+    }
+    function addFriend() {
+        let friendName = prompt("请输入你想添加的好友名称:","");
+        $.ajax({
+            url:"addFriend",
+            data:"friendName="+friendName+"&userNo="+"[[${userNo}]]",
+            method:"post",
+            success:function(result,status){
+                alert(result);
+            }
+
+        })
+    }
+
+    function friendApply(){
+        window.open("friendApplyCheck?"+"userNo=[[${userNo}]]");
+    }
+
+    function deleteFriend(){
+        let friendName = prompt("请输入你想要删除的好友名称:","");
+        $.ajax({
+            url:"deleteFriend",
+            method:"post",
+            data:"userNo=[[${userNo}]]&friendName="+friendName,
+            success:function (result,status) {
+                alert(result);
+                location.reload();
+            }
+        })
+    }
+</script>
+</html>

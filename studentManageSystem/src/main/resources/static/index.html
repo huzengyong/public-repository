@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>成绩查询</title>
+</head>
+<style>
+    #logBox{
+        position: absolute;
+        top: 30%;
+        left: 40%;
+    }
+</style>
+<body>
+<div id="logBox">
+    <h1>学生登录</h1>
+    <form method="post" action="stuLoginCheck">
+        <div>
+            <label>学号:</label>
+            <input type="text" name="stuNo">
+        </div>
+        <div>
+            <label>密码:</label>
+            <input type="password" name="password">
+        </div>
+        <input type="submit">
+    </form>
+</div>
+<a href="adminLogin.html">管理员身份登录</a>
+</body>
+<script>
+    window.onload=function () {
+        let url = document.URL.split('?')[1];
+        if (url=='false')
+            alert('用户名或密码错误');
+    }
+</script>
+</html>

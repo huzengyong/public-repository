@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+</head>
+<body>
+    <h1>注册</h1>
+    <div>
+        <form action="relistUser">
+            <div>
+                <label>用户名:</label>
+                <input type="text" name="username">
+            </div>
+            <div>
+                <label>密码:</label>
+                <input type="password" name="password">
+            </div>
+            <input type="submit">
+        </form>
+    </div>
+</body>
+<script>
+    window.onload=function () {
+        let url = document.URL;
+        let mes = url.split('?')[1];
+        if (mes=='false')
+            alert("该用户已注册，请重新填写用户名");
+    }
+</script>
+</html>

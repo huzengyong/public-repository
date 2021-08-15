@@ -1,0 +1,9 @@
+com\example\aliases\FriendList.class
+com\example\webchatting\WebChattingApplication.class
+com\example\mapper\FriendListMapper.class
+com\example\aliases\ChatList.class
+com\example\mapper\UserMapper.class
+com\example\aliases\User.class
+com\example\webchatting\MyAspect.class
+com\example\webchatting\MyHandler.class
+com\example\mapper\ChatListMapper.class
