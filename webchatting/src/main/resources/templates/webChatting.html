@@ -54,7 +54,7 @@
     function chooseFriend(present){
         document.getElementById("chatList").innerHTML="";
         presentFriend = present;
-        document.getElementById("chatFriendName").innerHTML=present.className;
+        document.getElementById("chatFriendName").innerHTML="当前好友:"+present.className;
         $.getJSON(
             "chooseFriend",
             {"userNo":"[[${userNo}]]","friendNo":presentFriend.value},
@@ -91,7 +91,7 @@
     window.onbeforeunload = function () {
         $.getJSON(
             "leave",
-            {"userNo":"[[${userNo}]]"},
+            {"userNo":"[[${username}]]"},
             function (result) {
             }
         );

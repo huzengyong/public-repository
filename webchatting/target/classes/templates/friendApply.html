@@ -28,7 +28,14 @@
     }
 
     function refuse(present){
-
+        $.ajax({
+            url:"refuseApply",
+            method:"post",
+            data:"userNo=[[${userNo}]]"+"&friendNo="+present.value,
+            success:function (result,status) {
+                location.reload();
+            }
+        })
     }
 </script>
 </html>
